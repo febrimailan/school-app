@@ -23,15 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     return this.first_name + ' ' + this.last_name
   }
 
-  //validate here
-  Student.hook('beforeValidate', function(user, options) {
-    if(validator.isEmail(user.email)){
-      return sequelize.Promise.resolve(user);
-    }else{
-      return sequelize.Promise.reject('validation error: email format is incorrect');
-      // confirm("Press a button!")
-    }
-  });
 
   return Student;
 };

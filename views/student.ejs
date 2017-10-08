@@ -48,20 +48,18 @@
           <table class="table table-bordered table-hover">
             <thead>
               <th>No</th>
-              <th>First Name</th>
-              <th>Last Name</th>
               <th>Full Name</th>
               <th>Email</th>
+              <th>Subject</th>
               <th>Options</th>
             </thead>
             <% var i = 1
               dataStudent.forEach(function(item){ %>
             <tbody>
               <td><%= i %></td>
-              <td><%= item.first_name %></td>
-              <td><%= item.last_name %></td>
               <td><%= item.getFullname()%></td>
               <td><%= item.email %></td>
+              <td><a href="/students/<%=item.id%>/addsubject">Add Subject</a></td>
               <td>
                 <a href="/students/edit/<%= item.id %>">Edit</a>
                 <a href="/students/delete/<%= item.id %>" onclick="return confirm('delete this student?')">Delete</a>

@@ -23,9 +23,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Sekolah Koding Hacktiv8 Pondok Indah</a>
+          <a class="navbar-brand" href="#">Clinic Hacktiv8</a>
         </div>
 
+        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/teachers">Teachers</a></li>
@@ -36,55 +37,56 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h3>Data Teachers</h3>
+          <h3>Add Teacher</h3>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <th>No</th>
-              <th>Subject Name</th>
-              <th>Teacher</th>
-              <th>Options</th>
-            </thead>
-            <% var i = 1
-              dataSubject.forEach(function(item){ %>
-            <tbody>
-              <td><%= i %></td>
-              <td><%= item.subject_name %></td>
-              <td>
-                <% if(item.Teachers.length > 0) { %>
-                  <% item.Teachers.forEach((teacher, index) => { %>
-                    <%=(index+1) + '. '+ teacher.first_name + ' '+ teacher.last_name%>
-                    <br>
-                  <% }) %>
-                <% } else { %>
-                    -
-                <% } %>
-              </td>
-              <td>
-                <a href="/subjects/<%=item.id%>/enrolledstudents"> Enrolled Student</a>
-              </td>
-              <td>
-                <a href="/subjects/edit/<%= item.id %>">Edit</a>
-                <a href="/subjects/delete/<%= item.id %>">Delete</a>
-              </td>
-            </tbody>
-            <% i++ }) %>
-          </table>
+          <form action="/teachers/add" method="POST">
+            <div class="form-group">
+              <label for="exampleInputEmail1">First Name</label>
+              <input type="text" name="first_name" class="form-control" id="exampleInputEmail1" placeholder="Your First Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Last Name</label>
+              <input type="text" name="last_name" class="form-control" id="exampleInputEmail1" placeholder="Your Last Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <select class="" name = "SubjectId">
+                <% dataSubject.forEach( item => { %>
+                  <option value="<%=item.id%>"> <%=item.subject_name%> </option>
+
+                <% }) %>
+              </select>
+            </div>
+            <button type="submit" id="btn-add" class="btn btn-success">Submit</button>
+          </form>
         </div>
+        <%if (err) { %>
+          <div>
+            <br>
+              <!-- <p><%=err%></p> -->
+              <script>
+              function myFunction() {
+                  confirm("<%=err%>");
+              }
+              myFunction()
+              </script>
+
+          </div>
+
+      <%  }%>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <button type="button" name="button" id="buttonAdd" class="btn btn-success">Add Subject</button>
-        </div>
-        <div class="col-md-12">
-          <a href="/" style="margin-top:20px; display:inline-block"> << back to home </a>
+          <a href="/teachers" style="margin-top:20px; display:inline-block"> << back to teacher </a>
         </div>
       </div>
     </div>
@@ -93,11 +95,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-      var add = document.getElementById('buttonAdd')
-      add.addEventListener('click', function(){
-        location.href = '/subjects/add'
-      })
-    </script>
   </body>
 </html>

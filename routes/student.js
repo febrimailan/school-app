@@ -49,7 +49,7 @@ router.get('/edit/:id', (req,res)=>{
     where: {id: req.params.id}
   })
   .then((student)=>{
-    res.render('studentEdit', {dataStudent:student[0], title:'Edit Student'})
+    res.render('studentEdit', {dataStudent:student, title:'Edit Student'})
   })
   .catch((err)=>{
     res.send(err)
@@ -59,7 +59,8 @@ router.get('/edit/:id', (req,res)=>{
 router.post('/edit/:id', (req,res)=>{
   model.Student.update({
     first_name: req.body.first_name,
-    last_name: req.body.last_name
+    last_name: req.body.last_name,
+    email: req.body.email
   },
   {
     where: {id:req.params.id}
@@ -81,6 +82,40 @@ router.get('/delete/:id', (req, res)=>{
   })
   .catch((err)=>{
     res.send(err)
+  })
+})
+
+//associate
+router.get('/:id/addsubject', (req, res)=>{
+  model.Student.findAll({
+    where: {id: `${req.params.id}`}
+  })
+  .then(student => {
+    model. Subject.findAll()
+    .then(subject => {
+      res.render('studentAddSubject', {dataStudent: student, dataSubject: subject, title: 'Add Subject'})
+    })
+    .catch(err =>{
+      console.log(err);
+    })
+  })
+  .catch(err => {
+    console.log(err);
+  })
+})
+
+router.post('/:id/addsubject', (req, res)=>{
+  model.SubjectStudent.create({
+    StudentId: `${req.params.id}`,
+    SubjectId: `${req.body.SubjectId}`,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  })
+  .then(student => {
+    res.redirect('/students')
+  })
+  .catch(err=> {
+    console.log(err);
   })
 })
 
